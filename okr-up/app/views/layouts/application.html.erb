@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OkrUp</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand">OKR-Up</a>
+        </div>
+        <div class="collapse navbar-collapse" id="main-navbar">
+          <ul class="nav navbar-nav">
+            <li><%= link_to 'Organizations', organizations_path %></li>
+            <li><%= link_to 'Objectives', objectives_path %></li>
+            <li><%= link_to 'Key Results', key_results_path %></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container" style="padding-top: 100px;">
+      <div class="row">
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

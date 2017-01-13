@@ -1,0 +1,27 @@
+<%= form_for(key_result) do |f| %>
+  <% if key_result.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(key_result.errors.count, "error") %> prohibited this key_result from being saved:</h2>
+
+      <ul>
+      <% key_result.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= f.label :objective_id %>
+    <%= collection_select :keyresult, :objective_id, Objective.all, :id, :description %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
