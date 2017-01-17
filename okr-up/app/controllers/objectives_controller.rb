@@ -5,11 +5,36 @@ class ObjectivesController < ApplicationController
   # GET /objectives.json
   def index
     @objectives = Objective.all
+    @root_node = nil
+
+    nodes_data = Hash.new
+    nodes_relationships = Hash.new
+
+    @objectives.each do |objective|
+      node = {"description" => objective.description, "children" => [], "id" => objective.id}
+      nodes_data[objective.id] = node
+
+      if objective.objective_id == nil
+        @root = node
+      else
+        if !nodes_relationships.key?(objective.objective_id)
+          nodes_relationships[objective.objective_id] = Array.new
+        end
+
+        nodes_relationships[objective.objective_id].push(objective.id)
+      end
+    end
+
+    parse_orgchart_relationships(@root, nodes_relationships, nodes_data)
+
+    puts @root.to_json
   end
 
   # GET /objectives/1
   # GET /objectives/1.json
   def show
+    @key_results = KeyResult.where(objective_id: @objective.id).all
+    @weeks = get_quarter_weeks(@objective.year, @objective.quarter)
   end
 
   # GET /objectives/new
@@ -69,6 +94,38 @@ class ObjectivesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def objective_params
-      params.require(:objective).permit(:description, :organization_id)
+      params.require(:objective).permit(:description, :organization_id, :objective_id, :year, :quarter)
     end
+
+  def parse_orgchart_relationships(node, relationships, nodes)
+    if relationships.has_key?(node["id"])
+      relationships[node["id"]].each do |child_node|
+        child_node = nodes[child_node].clone()
+        parse_orgchart_relationships(child_node, relationships, nodes)
+        node["children"].push(child_node)
+      end
+    end
+  end
+
+  def get_quarter_weeks(year, quarter)
+    weeks = Array.new
+
+    start_month = ((quarter - 1) * 3) + 1
+    end_month = start_month + 2
+    current_week = Date.new year, start_month, 1
+
+    if current_week.cwday > 1
+      current_week = current_week + ((7 - current_week.cwday) + 1)
+    end
+
+    loop do
+      weeks.push(current_week)
+      current_week = current_week + 7
+
+      break if current_week.month > end_month || current_week.year > year
+    end
+
+    weeks
+  end
+
 end

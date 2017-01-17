@@ -1,7 +1,7 @@
 <%= form_for(key_result) do |f| %>
   <% if key_result.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(key_result.errors.count, "error") %> prohibited this key_result from being saved:</h2>
+      <h2><%= pluralize(key_result.errors.count, "error") %> prohibited this key result from being saved:</h2>
 
       <ul>
       <% key_result.errors.full_messages.each do |message| %>
@@ -11,17 +11,17 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :description %>
-    <%= f.text_field :description %>
+    <%= f.text_field :description, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :objective_id %>
-    <%= collection_select :keyresult, :objective_id, Objective.all, :id, :description %>
+    <%= collection_select(:key_result, :objective_id, Objective.all, :id, :description, {prompt: true}, {class: "form-control"}) %>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <%= f.submit class: "btn btn-default" %>
   </div>
 <% end %>

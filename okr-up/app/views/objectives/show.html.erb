@@ -1,14 +1,59 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @objective.description %>
-</p>
+  <h1>Objective: <%= @objective.description; %></h1>
 
-<p>
-  <strong>Organization:</strong>
-  <%= @objective.organization %>
-</p>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <p>
+      <strong>Year:</strong>
+      <%= @objective.year %>
+    </p>
+
+    <p>
+      <strong>Quarter:</strong>
+      Q<%= @objective.quarter %>
+    </p>
+
+    <p>
+      <strong>Description:</strong>
+      <%= @objective.description %>
+    </p>
+
+    <p>
+      <strong>Organization:</strong>
+      <%= @objective.organization %>
+    </p>
+
+  </div>
+</div>
+
+<%= link_to 'New Key Result', new_key_result_path(:objective => @objective), class: "btn btn-primary" %>
+
+<% @key_results.each do |key_result| %>
+<div class="page-header">
+  <h2>Key result: <%= key_result.description %></h2>
+</div>
+    <div class="table-responsive">
+      <table class="table table-striped" id="weekly-progress-table">
+        <thead>
+          <tr>
+            <% @weeks.each do |week| %>
+              <th>Week <%= week.cweek %></th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <% @weeks.each do |week| %>
+              <td>
+                <span class="label label-default">Progress: 0%</span>
+              </td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+<% end %>
 
 <%= link_to 'Edit', edit_objective_path(@objective) %> |
 <%= link_to 'Back', objectives_path %>

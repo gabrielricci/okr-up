@@ -11,17 +11,32 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
+    <%= f.label :year %>
+    <%= f.text_field :year, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :quarter %>
+    <%= f.text_field :quarter, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :description %>
-    <%= f.text_field :description %>
+    <%= f.text_field :description, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :organization_id %>
-    <%= collection_select :objective, :organization_id, Organization.all, :id, :name %>
+    <%= collection_select(:objective, :organization_id, Organization.all, :id, :name, {prompt: true}, {class: "form-control"}) %>
   </div>
 
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <%= f.label "Parent objective" %>
+    <%= collection_select(:objective, :objective_id, Objective.all, :id, :description, {prompt: "Leave blank for root objective"}, {class: "form-control"}) %>
+  </div>
+
+  <div class="form-group">
+    <%= f.submit class: "btn btn-default" %>
   </div>
 <% end %>

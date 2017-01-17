@@ -15,6 +15,9 @@ class KeyResultsController < ApplicationController
   # GET /key_results/new
   def new
     @key_result = KeyResult.new
+    if params[:objective]
+      @key_result.objective = Objective.find(params[:objective])
+    end
   end
 
   # GET /key_results/1/edit
