@@ -1,0 +1,1 @@
+json.partial! "weekly_progresses/weekly_progress", weekly_progress: @weekly_progress

@@ -30,30 +30,41 @@
 <%= link_to 'New Key Result', new_key_result_path(:objective => @objective), class: "btn btn-primary" %>
 
 <% @key_results.each do |key_result| %>
-<div class="page-header">
-  <h2>Key result: <%= key_result.description %></h2>
-</div>
-    <div class="table-responsive">
-      <table class="table table-striped" id="weekly-progress-table">
-        <thead>
-          <tr>
-            <% @weeks.each do |week| %>
-              <th>Week <%= week.cweek %></th>
-            <% end %>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <% @weeks.each do |week| %>
-              <td>
-                <span class="label label-default">Progress: 0%</span>
-              </td>
-            <% end %>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-<% end %>
+  <div class="page-header">
+    <h2>
+      Key result: <%= key_result.description %>
+    </h2>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped" id="weekly-progress-table">
+      <thead>
+        <tr>
+          <% @weeks.each do |week| %>
+            <th>Week <%= week.cweek %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% @weeks.each do |week| %>
+            <td>
+              <% if @progresses[key_result.id].key?(week.cweek) %>
+                <% progress = @progresses[key_result.id][week.cweek] %>
+                <% label = if progress.progress > 75 then "label-success" elsif progress.progress > 30 then "label-warning" else "label-danger" end %>
+                <a href="<%= edit_weekly_progress_path(progress) %>">
+                  <span class="label <%= label %>">Progress: <%= progress.progress %>%</span>
+                </a>
+              <% else %>
+                <a href="<%= new_weekly_progress_path(:week => week.cweek, :year => @objective.year, :key_result => key_result) %>">
+                  <span class="label label-default">Progress: --</span>
+                </a>
+              <% end %>
+            </td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-<%= link_to 'Edit', edit_objective_path(@objective) %> |
-<%= link_to 'Back', objectives_path %>
+  <%= link_to 'Remove this key result', key_result, method: :delete, class: "btn btn-xs btn-default", data: { confirm: 'Are you sure?' } %>
+<% end %>

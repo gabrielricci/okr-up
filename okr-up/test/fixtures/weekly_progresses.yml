@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  key_result: 
+  year: 
+  quarter: 
+  progress: 1
+
+two:
+  key_result: 
+  year: 
+  quarter: 
+  progress: 1

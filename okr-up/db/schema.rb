@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170117001845) do
+ActiveRecord::Schema.define(version: 20170117021000) do
 
   create_table "key_results", force: :cascade do |t|
     t.string   "description"
@@ -38,6 +38,16 @@ ActiveRecord::Schema.define(version: 20170117001845) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "weekly_progresses", force: :cascade do |t|
+    t.integer  "key_result_id"
+    t.integer  "year"
+    t.integer  "week"
+    t.integer  "progress"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["key_result_id"], name: "index_weekly_progresses_on_key_result_id"
   end
 
 end

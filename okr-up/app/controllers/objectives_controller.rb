@@ -35,6 +35,18 @@ class ObjectivesController < ApplicationController
   def show
     @key_results = KeyResult.where(objective_id: @objective.id).all
     @weeks = get_quarter_weeks(@objective.year, @objective.quarter)
+    @progresses = Hash.new
+
+    @key_results.each do |key_result|
+      @progresses[key_result.id] = Hash.new
+
+      @kr_progresses = WeeklyProgress.where(key_result_id: key_result.id).all
+      @kr_progresses.each do |kr_progress|
+        @progresses[key_result.id][kr_progress.week] = kr_progress
+      end
+    end
+
+    puts @progresses
   end
 
   # GET /objectives/new

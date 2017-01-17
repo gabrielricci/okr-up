@@ -1,0 +1,2 @@
+module WeeklyProgressesHelper
+end

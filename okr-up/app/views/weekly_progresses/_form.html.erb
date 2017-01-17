@@ -1,0 +1,39 @@
+<%= form_for(weekly_progress) do |f| %>
+  <% if weekly_progress.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(weekly_progress.errors.count, "error") %> prohibited this weekly_progress from being saved:</h2>
+
+      <ul>
+      <% weekly_progress.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :key_result %>
+    <%= collection_select(:weekly_progress, :key_result_id, KeyResult.all, :id, :description, {prompt: true}, {class: "form-control"}) %>
+  </div>
+
+
+  <div class="form-group">
+    <%= f.label :year %>
+    <%= f.text_field :year, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :week %>
+    <%= f.text_field :week, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :progress %>
+    <%= f.number_field :progress, class: "form-control" %>
+  </div>
+
+
+  <div class="form-group">
+    <%= f.submit class: "btn btn-default" %>
+  </div>
+<% end %>
