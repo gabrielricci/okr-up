@@ -25,9 +25,9 @@ class ObjectivesController < ApplicationController
       end
     end
 
-    parse_orgchart_relationships(@root, nodes_relationships, nodes_data)
-
-    puts @root.to_json
+    if !@root.nil?
+      parse_orgchart_relationships(@root, nodes_relationships, nodes_data)
+    end
   end
 
   # GET /objectives/1
@@ -45,8 +45,6 @@ class ObjectivesController < ApplicationController
         @progresses[key_result.id][kr_progress.week] = kr_progress
       end
     end
-
-    puts @progresses
   end
 
   # GET /objectives/new

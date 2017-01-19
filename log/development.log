@@ -13648,3 +13648,456 @@ Processing by ObjectivesController#show as HTML
 Completed 200 OK in 147ms (Views: 114.5ms | ActiveRecord: 4.1ms)
 
 
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL PRIMARY KEY)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" varchar NOT NULL PRIMARY KEY, "value" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to CreateOrganizations (20170113010256)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mCREATE TABLE "organizations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170113010256"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateObjectives (20170113015022)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  [1m[35mCREATE TABLE "objectives" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "description" varchar, "organization_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mselect sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_objectives_on_organization_id" ON "objectives" ("organization_id")[0m
+  [1m[35mSQL (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170113015022"]]
+  [1m[35m (0.8ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateKeyResults (20170113020249)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE TABLE "key_results" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "description" varchar, "objective_id" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_key_results_on_objective_id" ON "key_results" ("objective_id")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170113020249"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddParentObjectives (20170113121739)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "objectives" ADD "objective_id" integer[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_objectives_on_organization_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_objectives_on_organization_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_objectives_on_objective_id" ON "objectives" ("objective_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170113121739"]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddYearToObjectives (20170117001808)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "objectives" ADD "year" integer[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_objectives_on_objective_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_objectives_on_objective_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_objectives_on_organization_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_objectives_on_organization_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_objectives_on_year" ON "objectives" ("year")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170117001808"]]
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+Migrating to AddQuarterToObjectives (20170117001845)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "objectives" ADD "quarter" integer[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_objectives_on_year' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_objectives_on_year' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_objectives_on_objective_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_objectives_on_objective_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_objectives_on_organization_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_objectives_on_organization_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[35mCREATE  INDEX "index_objectives_on_quarter" ON "objectives" ("quarter")[0m
+  [1m[35mSQL (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170117001845"]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Migrating to CreateWeeklyProgresses (20170117021000)
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  [1m[35mCREATE TABLE "weekly_progresses" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "key_result_id" integer, "year" integer, "week" integer, "progress" integer, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mCREATE  INDEX "index_weekly_progresses_on_key_result_id" ON "weekly_progresses" ("key_result_id")[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20170117021000"]]
+  [1m[35m (1.3ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = ? LIMIT ?[0m  [["key", :environment], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES (?, ?, ?, ?)[0m  [["key", "environment"], ["value", "development"], ["created_at", 2017-01-19 16:44:56 UTC], ["updated_at", 2017-01-19 16:44:56 UTC]]
+  [1m[35m (1.0ms)[0m  [1m[36mcommit transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_key_results_on_objective_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_key_results_on_objective_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_objectives_on_quarter' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_objectives_on_quarter' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_objectives_on_year' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_objectives_on_year' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_objectives_on_objective_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_objectives_on_objective_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_objectives_on_organization_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_objectives_on_organization_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  [1m[34m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_weekly_progresses_on_key_result_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_weekly_progresses_on_key_result_id' AND type='index'
+[0m
+Started GET "/objectives/6" for ::1 at 2017-01-19 14:45:06 -0200
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1m[34mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by ObjectivesController#show as HTML
+  Parameters: {"id"=>"6"}
+  [1m[36mObjective Load (0.3ms)[0m  [1m[34mSELECT  "objectives".* FROM "objectives" WHERE "objectives"."id" = ? LIMIT ?[0m  [["id", 6], ["LIMIT", 1]]
+Completed 404 Not Found in 27ms (ActiveRecord: 1.2ms)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Objective with 'id'=6):
+  
+app/controllers/objectives_controller.rb:104:in `set_objective'
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.9ms)
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.5ms)
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.6ms)
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (109.0ms)
+Started GET "/" for ::1 at 2017-01-19 14:45:13 -0200
+Processing by ObjectivesController#index as HTML
+  [1m[36mObjective Load (0.7ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.7ms)
+
+
+  
+NoMethodError (undefined method `[]' for nil:NilClass):
+  
+app/controllers/objectives_controller.rb:113:in `parse_orgchart_relationships'
+app/controllers/objectives_controller.rb:28:in `index'
+Started GET "/" for ::1 at 2017-01-19 14:45:13 -0200
+Processing by ObjectivesController#index as HTML
+  [1m[36mObjective Load (0.6ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.6ms)
+
+
+  
+NoMethodError (undefined method `[]' for nil:NilClass):
+  
+app/controllers/objectives_controller.rb:113:in `parse_orgchart_relationships'
+app/controllers/objectives_controller.rb:28:in `index'
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (5.2ms)
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (2.1ms)
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_source.html.erb (4.3ms)
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (1.1ms)
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (189.1ms)
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (3.1ms)
+  Rendering /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (0.9ms)
+  Rendered /Users/gabrielricci/.rvm/gems/ruby-2.3.3@okr-up/gems/actionpack-5.0.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.html.erb within rescues/layout (227.3ms)
+Started GET "/" for ::1 at 2017-01-19 14:47:58 -0200
+Processing by ObjectivesController#index as HTML
+  [1m[36mObjective Load (0.4ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.html.erb within layouts/application
+  Rendered objectives/index.html.erb within layouts/application (2.2ms)
+Completed 200 OK in 469ms (Views: 460.0ms | ActiveRecord: 0.8ms)
+
+
+Started GET "/" for ::1 at 2017-01-19 14:47:59 -0200
+Processing by ObjectivesController#index as JSON
+  [1m[36mObjective Load (0.5ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.json.jbuilder
+  Rendered objectives/index.json.jbuilder (5.6ms)
+Completed 200 OK in 59ms (Views: 34.3ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/objectives/new" for ::1 at 2017-01-19 14:48:00 -0200
+Processing by ObjectivesController#new as HTML
+  Rendering objectives/new.html.erb within layouts/application
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations"[0m
+  [1m[36mObjective Load (0.3ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendered objectives/_form.html.erb (36.9ms)
+  Rendered objectives/new.html.erb within layouts/application (39.9ms)
+Completed 200 OK in 154ms (Views: 135.3ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/organizations" for ::1 at 2017-01-19 14:48:03 -0200
+Processing by OrganizationsController#index as HTML
+  Rendering organizations/index.html.erb within layouts/application
+  [1m[36mOrganization Load (0.5ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations"[0m
+  Rendered organizations/index.html.erb within layouts/application (2.6ms)
+Completed 200 OK in 91ms (Views: 86.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/organizations/new" for ::1 at 2017-01-19 14:48:27 -0200
+Processing by OrganizationsController#new as HTML
+  Rendering organizations/new.html.erb within layouts/application
+  Rendered organizations/_form.html.erb (2.6ms)
+  Rendered organizations/new.html.erb within layouts/application (5.9ms)
+Completed 200 OK in 103ms (Views: 90.2ms | ActiveRecord: 1.1ms)
+
+
+Started POST "/organizations" for ::1 at 2017-01-19 14:48:29 -0200
+Processing by OrganizationsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"ALq4A+zFmz+41HeX4c6BPNIljA4atEWDCdSuPABDryyrE6by7HlkD2IXsq7nXqbQJ6D465EGjkbK+gYJYJ4PBg==", "organization"=>{"name"=>"SumUp"}, "commit"=>"Create Organization"}
+  [1m[35m (0.4ms)[0m  [1m[36mbegin transaction[0m
+  [1m[35mSQL (1.9ms)[0m  [1m[32mINSERT INTO "organizations" ("name", "created_at", "updated_at") VALUES (?, ?, ?)[0m  [["name", "SumUp"], ["created_at", 2017-01-19 16:48:29 UTC], ["updated_at", 2017-01-19 16:48:29 UTC]]
+  [1m[35m (0.9ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/organizations/1
+Completed 302 Found in 8ms (ActiveRecord: 3.2ms)
+
+
+Started GET "/organizations/1" for ::1 at 2017-01-19 14:48:29 -0200
+Processing by OrganizationsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering organizations/show.html.erb within layouts/application
+  Rendered organizations/show.html.erb within layouts/application (1.0ms)
+Completed 200 OK in 102ms (Views: 96.5ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:30 -0200
+Processing by ObjectivesController#index as HTML
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.html.erb within layouts/application
+  Rendered objectives/index.html.erb within layouts/application (1.5ms)
+Completed 200 OK in 90ms (Views: 86.3ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/organizations/1" for ::1 at 2017-01-19 14:48:30 -0200
+Processing by OrganizationsController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering organizations/show.json.jbuilder
+  Rendered organizations/_organization.json.jbuilder (1.3ms)
+  Rendered organizations/show.json.jbuilder (7.9ms)
+Completed 200 OK in 48ms (Views: 27.7ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/objectives/new" for ::1 at 2017-01-19 14:48:31 -0200
+Processing by ObjectivesController#new as HTML
+  Rendering objectives/new.html.erb within layouts/application
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations"[0m
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendered objectives/_form.html.erb (7.1ms)
+  Rendered objectives/new.html.erb within layouts/application (10.0ms)
+Completed 200 OK in 113ms (Views: 109.4ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/organizations/1" for ::1 at 2017-01-19 14:48:33 -0200
+Processing by OrganizationsController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering organizations/show.json.jbuilder
+  Rendered organizations/_organization.json.jbuilder (0.8ms)
+  Rendered organizations/show.json.jbuilder (5.7ms)
+Completed 200 OK in 46ms (Views: 26.4ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:34 -0200
+Processing by ObjectivesController#index as HTML
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.html.erb within layouts/application
+  Rendered objectives/index.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 85ms (Views: 82.6ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:35 -0200
+Processing by ObjectivesController#index as JSON
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.json.jbuilder
+  Rendered objectives/index.json.jbuilder (0.7ms)
+Completed 200 OK in 46ms (Views: 26.2ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:36 -0200
+Processing by ObjectivesController#index as HTML
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.html.erb within layouts/application
+  Rendered objectives/index.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 105ms (Views: 102.1ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:37 -0200
+Processing by ObjectivesController#index as JSON
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.json.jbuilder
+  Rendered objectives/index.json.jbuilder (0.5ms)
+Completed 200 OK in 45ms (Views: 24.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:39 -0200
+Processing by ObjectivesController#index as HTML
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.html.erb within layouts/application
+  Rendered objectives/index.html.erb within layouts/application (1.1ms)
+Completed 200 OK in 76ms (Views: 72.8ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:39 -0200
+Processing by ObjectivesController#index as JSON
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.json.jbuilder
+  Rendered objectives/index.json.jbuilder (0.6ms)
+Completed 200 OK in 38ms (Views: 21.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/organizations" for ::1 at 2017-01-19 14:48:40 -0200
+Processing by OrganizationsController#index as HTML
+  Rendering organizations/index.html.erb within layouts/application
+  [1m[36mOrganization Load (0.4ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations"[0m
+  Rendered organizations/index.html.erb within layouts/application (3.1ms)
+Completed 200 OK in 82ms (Views: 78.0ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:41 -0200
+Processing by ObjectivesController#index as HTML
+  [1m[36mObjective Load (0.3ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.html.erb within layouts/application
+  Rendered objectives/index.html.erb within layouts/application (3.6ms)
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:41 -0200
+Processing by ObjectivesController#index as JSON
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.json.jbuilder
+  Rendered objectives/index.json.jbuilder (0.5ms)
+Completed 200 OK in 45ms (Views: 22.9ms | ActiveRecord: 0.2ms)
+
+
+Completed 200 OK in 129ms (Views: 124.8ms | ActiveRecord: 0.3ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:41 -0200
+Processing by ObjectivesController#index as JSON
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.json.jbuilder
+  Rendered objectives/index.json.jbuilder (0.5ms)
+Completed 200 OK in 37ms (Views: 19.9ms | ActiveRecord: 0.2ms)
+
+
+Started GET "/objectives/new" for ::1 at 2017-01-19 14:48:42 -0200
+Processing by ObjectivesController#new as HTML
+  Rendering objectives/new.html.erb within layouts/application
+  [1m[36mOrganization Load (0.3ms)[0m  [1m[34mSELECT "organizations".* FROM "organizations"[0m
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendered objectives/_form.html.erb (7.0ms)
+  Rendered objectives/new.html.erb within layouts/application (9.7ms)
+Completed 200 OK in 84ms (Views: 81.2ms | ActiveRecord: 0.5ms)
+
+
+Started POST "/objectives" for ::1 at 2017-01-19 14:48:56 -0200
+Processing by ObjectivesController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"8yWjfLbsTv+E4BPwczGuAHowqlZA33OWNeTpTYRvzclQk3P8pxcT8cQcAZdDooRFLDUBY2rGZ4a/tZxuuyIOqg==", "objective"=>{"year"=>"2017", "quarter"=>"1", "description"=>"Sharpen the Axe & Start 10x", "organization_id"=>"1", "objective_id"=>""}, "commit"=>"Create Objective"}
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "objectives" ("description", "organization_id", "created_at", "updated_at", "year", "quarter") VALUES (?, ?, ?, ?, ?, ?)[0m  [["description", "Sharpen the Axe & Start 10x"], ["organization_id", 1], ["created_at", 2017-01-19 16:48:56 UTC], ["updated_at", 2017-01-19 16:48:56 UTC], ["year", 2017], ["quarter", 1]]
+  [1m[35m (2.4ms)[0m  [1m[36mcommit transaction[0m
+Redirected to http://localhost:3000/objectives/1
+Completed 302 Found in 19ms (ActiveRecord: 3.2ms)
+
+
+Started GET "/objectives/1" for ::1 at 2017-01-19 14:48:56 -0200
+Processing by ObjectivesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT  "objectives".* FROM "objectives" WHERE "objectives"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mKeyResult Load (0.3ms)[0m  [1m[34mSELECT "key_results".* FROM "key_results" WHERE "key_results"."objective_id" = ?[0m  [["objective_id", 1]]
+  Rendering objectives/show.html.erb within layouts/application
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered objectives/show.html.erb within layouts/application (3.8ms)
+Completed 200 OK in 93ms (Views: 83.7ms | ActiveRecord: 1.0ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:48:59 -0200
+Processing by ObjectivesController#index as HTML
+  [1m[36mObjective Load (0.4ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.html.erb within layouts/application
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered objectives/index.html.erb within layouts/application (5.2ms)
+Completed 200 OK in 112ms (Views: 106.7ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/objectives" for ::1 at 2017-01-19 14:49:00 -0200
+Started GET "/objectives" for ::1 at 2017-01-19 14:49:00 -0200
+Processing by ObjectivesController#index as JSON
+Processing by ObjectivesController#index as HTML
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT "objectives".* FROM "objectives"[0m
+  Rendering objectives/index.json.jbuilder
+  Rendering objectives/index.html.erb within layouts/application
+  [1m[36mOrganization Load (0.2ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered objectives/_objective.json.jbuilder (1.8ms)
+  Rendered objectives/index.html.erb within layouts/application (6.1ms)
+  Rendered objectives/index.json.jbuilder (11.8ms)
+Completed 200 OK in 68ms (Views: 48.9ms | ActiveRecord: 0.2ms)
+
+
+Completed 200 OK in 179ms (Views: 139.6ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/objectives/1" for ::1 at 2017-01-19 14:49:03 -0200
+Processing by ObjectivesController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mObjective Load (0.2ms)[0m  [1m[34mSELECT  "objectives".* FROM "objectives" WHERE "objectives"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mKeyResult Load (0.1ms)[0m  [1m[34mSELECT "key_results".* FROM "key_results" WHERE "key_results"."objective_id" = ?[0m  [["objective_id", 1]]
+  Rendering objectives/show.html.erb within layouts/application
+  [1m[36mOrganization Load (0.1ms)[0m  [1m[34mSELECT  "organizations".* FROM "organizations" WHERE "organizations"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  Rendered objectives/show.html.erb within layouts/application (3.2ms)
+Completed 200 OK in 100ms (Views: 96.1ms | ActiveRecord: 0.4ms)
+
+
