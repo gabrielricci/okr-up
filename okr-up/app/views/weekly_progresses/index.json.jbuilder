@@ -1,1 +1,0 @@
-json.array! @weekly_progresses, partial: 'weekly_progresses/weekly_progress', as: :weekly_progress

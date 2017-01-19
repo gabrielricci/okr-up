@@ -2,4 +2,4 @@
 
 <%= render 'form', weekly_progress: @weekly_progress %>
 
-<%= link_to 'Back', weekly_progresses_path %>
+<%= link_to 'Back', @weekly_progress.key_result.objective %>

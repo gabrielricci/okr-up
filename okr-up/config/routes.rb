@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-  resources :weekly_progresses
-  resources :key_results
+  resources :weekly_progresses, only: [:new, :edit, :create, :update]
+  resources :key_results, only: [:new, :edit, :create, :update, :destroy]
   resources :objectives
   resources :organizations
-  root 'organizations#index'
+  root 'objectives#index'
 end

@@ -1,16 +1,5 @@
 class WeeklyProgressesController < ApplicationController
-  before_action :set_weekly_progress, only: [:show, :edit, :update, :destroy]
-
-  # GET /weekly_progresses
-  # GET /weekly_progresses.json
-  def index
-    @weekly_progresses = WeeklyProgress.all
-  end
-
-  # GET /weekly_progresses/1
-  # GET /weekly_progresses/1.json
-  def show
-  end
+  before_action :set_weekly_progress, only: [:edit, :update]
 
   # GET /weekly_progresses/new
   def new
@@ -61,16 +50,6 @@ class WeeklyProgressesController < ApplicationController
         format.html { render :edit }
         format.json { render json: @weekly_progress.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /weekly_progresses/1
-  # DELETE /weekly_progresses/1.json
-  def destroy
-    @weekly_progress.destroy
-    respond_to do |format|
-      format.html { redirect_to weekly_progresses_url, notice: 'Weekly progress was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 

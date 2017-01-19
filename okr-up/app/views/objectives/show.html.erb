@@ -51,7 +51,7 @@
               <% if @progresses[key_result.id].key?(week.cweek) %>
                 <% progress = @progresses[key_result.id][week.cweek] %>
                 <% label = if progress.progress > 75 then "label-success" elsif progress.progress > 30 then "label-warning" else "label-danger" end %>
-                <a href="<%= edit_weekly_progress_path(progress) %>">
+                <a href="<%= edit_weekly_progress_path(progress) %>" class="edit-progress-btn">
                   <span class="label <%= label %>">Progress: <%= progress.progress %>%</span>
                 </a>
               <% else %>
@@ -66,5 +66,6 @@
     </table>
   </div>
 
+  <%= link_to 'Edit this key result', edit_key_result_path(key_result), class: "btn btn-xs btn-default" %>
   <%= link_to 'Remove this key result', key_result, method: :delete, class: "btn btn-xs btn-default", data: { confirm: 'Are you sure?' } %>
 <% end %>
